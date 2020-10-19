@@ -4,6 +4,7 @@ node_js:
   - '8'
 before_install:
   - echo "Installing additional dependencies required for running tests on travis"
+  - npm install
   - npm run cirequirements
 before_script:
   - echo "Installing dev dependencies required of all codegens"

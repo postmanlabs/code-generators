@@ -14,7 +14,7 @@
     "postinstall": "node npm/deepinstall.js",
     "deepinstall": "node npm/deepinstall.js",
     "boilerplate": "node npm/boilerplate.js",
-    "cirequirements": "npm/ci-requirements.sh",
+    "cirequirements": "node npm/ci-requirements.js",
     "test-lint": "node npm/test-lint.js"
   },
   "repository": {
