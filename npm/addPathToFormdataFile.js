@@ -3,9 +3,9 @@ var path = require('path'),
 let collectionPath = path.resolve(__dirname, '../test/codegen/newman/fixtures/formdataFileCollection.json'),
   collection = require(collectionPath),
   formdata = collection.item[0].request.body.formdata;
-formdata[0].src = path.resolve(__dirname, '../dummyFile1.txt');
-formdata[1].src[0] = path.resolve(__dirname, '../dummyFile2.txt');
-formdata[1].src[1] = path.resolve(__dirname, '../dummyFile3.txt');
+formdata[0].src = path.resolve(__dirname, '../test1.txt');
+formdata[1].src[0] = path.resolve(__dirname, '../test2.txt');
+formdata[1].src[1] = path.resolve(__dirname, '../test3.txt');
 
 fs.writeFileSync(collectionPath, JSON.stringify(collection, null, 2), function (error) {
   if (error) {
