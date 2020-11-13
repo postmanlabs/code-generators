@@ -28,6 +28,9 @@ pushd ./codegens/csharp-restsharp &>/dev/null;
   popd &>/dev/null;
 popd &>/dev/null;
 
+echo "Installing Poweshell"
+  sudo apt-get install powershell -y
+
 echo "Installing dependencies required for tests in codegens/php-httprequest2"
   pear install HTTP_Request2-2.3.0
 

@@ -1,44 +1,44 @@
 {
-	"info": {
-		"_postman_id": "7da8f1cd-aeb0-420f-a989-d47db46b44b0",
-		"name": "Multipart/form-data FILE",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-	},
-	"item": [
-		{
-			"name": "Single/multiple file upload via form-data",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
+  "info": {
+    "_postman_id": "7da8f1cd-aeb0-420f-a989-d47db46b44b0",
+    "name": "Multipart/form-data FILE",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Single/multiple file upload via form-data",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
               "key": "single file",
               "value": "",
               "type": "file",
               "src": "<file path>"
-						},
-						{
+            },
+            {
               "key": "multiple files",
               "value": "",
               "type": "file",
               "src": ["<file path 1>","<file path 2>"]
             }
-					]
-				},
-				"url": {
-					"raw": "https://postman-echo.com/post",
-					"protocol": "https",
-					"host": [
-						"postman-echo",
-						"com"
-					],
-					"path": [
-						"post"
-					]
-				}
-			}
+          ]
+        },
+        "url": {
+          "raw": "https://postman-echo.com/post",
+          "protocol": "https",
+          "host": [
+            "postman-echo",
+            "com"
+          ],
+          "path": [
+            "post"
+          ]
+        }
+      }
     },
     {
       "name": "Binary file upload via form-data",
@@ -69,5 +69,5 @@
         }
       }
     }
-	]
+  ]
 }

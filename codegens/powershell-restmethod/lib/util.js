@@ -5,13 +5,15 @@
  *
  * @param {String} inputString
  * @param {Boolean} [trim] - indicates whether to trim string or not
+ * @param {Boolean} [replace] - indicates whether to replace character in the string or not
  * @returns {String}
  */
-function sanitize (inputString, trim) {
+function sanitize (inputString, trim, replace) {
   if (typeof inputString !== 'string') {
     return '';
   }
-  inputString = inputString.replace(/\\/g, '\`\\').replace(/\"/g, '\`\"').replace(/\n/g, '\`n');
+  inputString = replace ? (inputString.replace(/\\/g, '\`\\').replace(/\"/g, '\`\"').replace(/\n/g, '\`n')) :
+    inputString;
   return trim ? inputString.trim() : inputString;
 }
 

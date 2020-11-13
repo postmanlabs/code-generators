@@ -20,14 +20,14 @@ const VALID_METHODS = ['DEFAULT',
  * @param {Object} body URLEncoded Body
  */
 function parseURLEncodedBody (body) {
-  var bodySnippet = '$body = "',
+  var bodySnippet = '$body = @"\n',
     urlencodedArray = [];
   _.forEach(body, function (data) {
     if (!data.disabled) {
       urlencodedArray.push(`${encodeURIComponent(data.key)}=${encodeURIComponent(data.value)}`);
     }
   });
-  bodySnippet += urlencodedArray.join('&') + '"\n';
+  bodySnippet += urlencodedArray.join('&') + '\n"@\n';
   return bodySnippet;
 }
 
@@ -36,8 +36,9 @@ function parseURLEncodedBody (body) {
  *
  * @param {Object} body FormData body
  * @param {boolean} trim trim body option
+ * @param {boolean} replace replace character option
  */
-function parseFormData (body, trim) {
+function parseFormData (body, trim, replace) {
   if (_.isEmpty(body)) {
     return '$body = $null\n';
   }
@@ -51,8 +52,8 @@ function parseFormData (body, trim) {
         bodySnippet += `$multipartFile = '${data.src}'\n` +
         '$FileStream = [System.IO.FileStream]::new($multipartFile, [System.IO.FileMode]::Open)\n' +
         '$fileHeader = [System.Net.Http.Headers.ContentDispositionHeaderValue]::new("form-data")\n' +
-        `$fileHeader.Name = "${sanitize(data.key)}"\n` +
-        `$fileHeader.FileName = "${sanitize(fileName, trim)}"\n` +
+        `$fileHeader.Name = "${sanitize(data.key, !trim, replace)}"\n` +
+        `$fileHeader.FileName = "${sanitize(fileName, trim, replace)}"\n` +
         '$fileContent = [System.Net.Http.StreamContent]::new($FileStream)\n' +
         '$fileContent.Headers.ContentDisposition = $fileHeader\n' +
         '$multipartContent.Add($fileContent)\n\n';
@@ -60,8 +61,8 @@ function parseFormData (body, trim) {
       else {
         bodySnippet += '$stringHeader = ' +
           '[System.Net.Http.Headers.ContentDispositionHeaderValue]::new("form-data")\n' +
-          `$stringHeader.Name = "${sanitize(data.key, trim)}"\n` +
-          `$StringContent = [System.Net.Http.StringContent]::new("${sanitize(data.value, trim)}")\n` +
+          `$stringHeader.Name = "${sanitize(data.key, trim, replace)}"\n` +
+          `$StringContent = [System.Net.Http.StringContent]::new("${sanitize(data.value, trim, replace)}")\n` +
           '$StringContent.Headers.ContentDisposition = $stringHeader\n' +
           '$multipartContent.Add($stringContent)\n\n';
       }
@@ -76,9 +77,10 @@ function parseFormData (body, trim) {
  *
  * @param {Object} body Raw body data
  * @param {boolean} trim trim body option
+ * @param {boolean} replace replace character option
  */
-function parseRawBody (body, trim) {
-  return `$body = "${sanitize(body.toString(), trim)}"\n`;
+function parseRawBody (body, trim, replace) {
+  return `$body = @"\n${sanitize(body.toString(), trim, !replace)}\n"@\n`;
 }
 
 /**
@@ -86,8 +88,9 @@ function parseRawBody (body, trim) {
  *
  * @param {Object} body graphql body data
  * @param {boolean} trim trim body option
+ * @param {boolean} replace replace character option
  */
-function parseGraphQL (body, trim) {
+function parseGraphQL (body, trim, replace) {
   let query = body.query,
     graphqlVariables;
   try {
@@ -96,10 +99,10 @@ function parseGraphQL (body, trim) {
   catch (e) {
     graphqlVariables = {};
   }
-  return `$body = "${sanitize(JSON.stringify({
+  return `$body = @"\n${sanitize(JSON.stringify({
     query: query,
     variables: graphqlVariables
-  }), trim)}"\n`;
+  }), trim, !replace)}\n"@\n`;
 }
 
 /* eslint-disable no-unused-vars*/
@@ -109,9 +112,10 @@ function parseGraphQL (body, trim) {
  *
  * @param {Object} src File path
  * @param {boolean} trim trim body option
+ * @param {boolean} replace replace character option
  */
-function parseFileData (src, trim) {
-  return '$body = "<file-contents-here>"\n';
+function parseFileData (src, trim, replace) {
+  return '$body = @"\n<file-contents-here>\n"@\n';
 }
 /* eslint-enable no-unused-vars*/
 
@@ -120,23 +124,24 @@ function parseFileData (src, trim) {
  *
  * @param {Object} body body object from request
  * @param {boolean} trim trim body option
+ * @param {boolean} replace replace character option
  */
-function parseBody (body, trim) {
+function parseBody (body, trim, replace) {
   if (!_.isEmpty(body)) {
     switch (body.mode) {
       case 'urlencoded':
         return parseURLEncodedBody(body.urlencoded);
       case 'raw':
-        return parseRawBody(body.raw, trim);
+        return parseRawBody(body.raw, trim, replace);
       case 'graphql':
-        return parseGraphQL(body.graphql, trim);
+        return parseGraphQL(body.graphql, trim, replace);
       case 'formdata':
-        return parseFormData(body.formdata, trim);
+        return parseFormData(body.formdata, trim, replace);
         /* istanbul ignore next */
       case 'file':
-        return parseFileData(body.file, trim);
+        return parseFileData(body.file, trim, replace);
       default:
-        return parseRawBody(body[body.mode], trim);
+        return parseRawBody(body[body.mode], trim, replace);
     }
   }
   return '';
@@ -153,7 +158,8 @@ function parseHeaders (headers) {
     headers = _.reject(headers, 'disabled');
     headerSnippet = '$headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"\n';
     _.forEach(headers, function (header) {
-      headerSnippet += `$headers.Add("${sanitize(header.key, true)}", "${sanitize(header.value)}")\n`;
+      headerSnippet += `$headers.Add("${sanitize(header.key, true, true)}", "${sanitize(header.value, false, true)}")\n
+      `;
     });
   }
   else {
@@ -190,6 +196,13 @@ function getOptions () {
       type: 'boolean',
       default: false,
       description: 'Remove white space and additional lines that may affect the server\'s response'
+    },
+    {
+      name: 'Replace characters from a field',
+      id: 'replaceCharacters',
+      type: 'boolean',
+      default: true,
+      description: 'Replaces characters which are required for a valid powershell string'
     }
   ];
 }
@@ -211,6 +224,7 @@ function convert (request, options, callback) {
   options = sanitizeOptions(options, getOptions());
 
   var trim = options.trimRequestBody,
+    replace = options.replaceCharacters,
     headers, body,
     codeSnippet = '',
     headerSnippet = '',
@@ -275,7 +289,7 @@ function convert (request, options, callback) {
     });
   }
   body = request.body ? request.body.toJSON() : {};
-  bodySnippet = parseBody(body, trim);
+  bodySnippet = parseBody(body, trim, replace);
 
   if (headerSnippet !== '') {
     codeSnippet += headerSnippet + '\n';

@@ -91,7 +91,8 @@ const expectedOptions = {
     'protocol',
     'useMimeType',
     'ES6_enabled',
-    'quoteType'
+    'quoteType',
+    'replaceCharacters'
   ],
   CODEGEN_ABS_PATH = `./codegens/${codegen}`;
 describe('Code-gen repository ' + codegen, function () {
