@@ -330,7 +330,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "var val = 6;\nconsole.log(val);console.log('$text\r\n');\n"
+					"raw": "var val = 6;\nconsole.log(val);console.log('text\r\n');\n"
 				},
 				"url": {
 					"raw": "https://postman-echo.com/post",
