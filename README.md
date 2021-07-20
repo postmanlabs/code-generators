@@ -28,6 +28,7 @@ List of supported code generators:
 | JavaScript | Fetch | 
 | JavaScript | jQuery | 
 | JavaScript | XHR |
+| Kotlin | Retrofit2 |
 | NodeJs | Axios | 
 | NodeJs | Native |
 | NodeJs | Request |
