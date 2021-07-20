@@ -18,7 +18,7 @@ Convert function takes three parameters
     * `indentCount` - The number of indentation characters to add per code level
     * `trimRequestBody` - Trim request body fields
     * `followRedirect` - Boolean denoting whether to redirect a request
-    * `requestTimeout` - Integer denoting time after which the request will bail out in milli-seconds
+    * `requestTimeoutInSeconds` - Integer denoting time after which the request will bail out in seconds
     * `multiLine` - Boolean denoting whether to output code snippet with multi line breaks
     * `longFormat` - Boolean denoting whether to use longform cURL options in snippet
     * `quoteType` - String denoting the quote type to use (single or double) for URL

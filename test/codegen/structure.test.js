@@ -44,6 +44,13 @@ const expectedOptions = {
       description: 'Set number of milliseconds the request should wait' +
       ' for a response before timing out (use 0 for infinity)'
     },
+    requestTimeoutInSeconds: {
+      name: 'Set request timeout (in seconds)',
+      type: 'positiveInteger',
+      default: 0,
+      description: 'Set number of seconds the request should wait' +
+      ' for a response before timing out (use 0 for infinity)'
+    },
     followRedirect: {
       name: 'Follow redirects',
       type: 'boolean',
@@ -84,6 +91,7 @@ const expectedOptions = {
     'indentCount',
     'trimRequestBody',
     'requestTimeout',
+    'requestTimeoutInSeconds',
     'silent',
     'includeBoilerplate',
     'followRedirect',

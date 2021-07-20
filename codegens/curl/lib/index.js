@@ -18,7 +18,7 @@ self = module.exports = {
       format, snippet, silent, url, quoteType;
 
     redirect = options.followRedirect;
-    timeout = options.requestTimeout;
+    timeout = options.requestTimeoutInSeconds;
     multiLine = options.multiLine;
     format = options.longFormat;
     trim = options.trimRequestBody;
@@ -222,11 +222,11 @@ self = module.exports = {
           '(Use double quotes when running curl in cmd.exe and single quotes for the rest)'
       },
       {
-        name: 'Set request timeout',
-        id: 'requestTimeout',
+        name: 'Set request timeout (in seconds)',
+        id: 'requestTimeoutInSeconds',
         type: 'positiveInteger',
         default: 0,
-        description: 'Set number of milliseconds the request should wait for a response before ' +
+        description: 'Set number of seconds the request should wait for a response before ' +
           'timing out (use 0 for infinity)'
       },
       {
