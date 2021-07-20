@@ -5,7 +5,7 @@ var self = module.exports = {
      *
      * @param {String} inputString
      * @param {Boolean} [trim] - indicates whether to trim string or not
-     * @param {Boolean} [quoteType] - indicates which quoteType has to be escaped
+     * @param {String} [quoteType] - indicates which quoteType has to be escaped
      * @param {Boolean} [backSlash] - indicates whether to escape backslash(\\)
      * @returns {String}
      */
@@ -20,6 +20,8 @@ var self = module.exports = {
 
     if (quoteType === '"') {
       inputString = inputString.replace(/"/g, '\\"');
+      // Escape backslash if double quote was already escaped before call to sanitize
+      inputString = inputString.replace(/(?<!\\)\\\\"/g, '\\\\\\"');
     }
     else if (quoteType === '\'') {
       // for curl escaping of single quotes inside single quotes involves changing of ' to '\''

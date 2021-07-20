@@ -8,6 +8,9 @@
     "node": true,
     "es6": true
   },
+  "parserOptions": {
+    "ecmaVersion": 2018
+  },
   "rules": {
     // Possible Errors
     "for-direction": "error",

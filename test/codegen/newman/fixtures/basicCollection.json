@@ -288,7 +288,7 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "{\n    body{\n        graphql\n    }\n}",
+						"query": "{\n  findScenes(\n    filter: {per_page: 0}\n    scene_filter: {is_missing: \"performers\"}){\n    count\n    scenes {\n      id\n      title\n      path\n    }\n  }\n}",
 						"variables": "{\n\t\"variable_key\": \"variable_value\"\n}"
 					}
 				},
