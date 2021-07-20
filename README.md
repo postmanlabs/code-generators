@@ -42,6 +42,7 @@ List of supported code generators:
 | Python | Requests |
 | Ruby | Net:HTTP |
 | Shell | Httpie |
+| Shell | Apache Bench |
 | Shell | wget |
 | Swift | URLSession | 
 ## Table of contents 
