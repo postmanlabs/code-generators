@@ -28,6 +28,13 @@ pushd ./codegens/csharp-restsharp &>/dev/null;
   popd &>/dev/null;
 popd &>/dev/null;
 
+echo "Installing dependencies required for tests in codegens/csharp-httpclient"
+# relying on restsharp installing dotnet 2.2
+pushd ./codegens/csharp-httpclient &>/dev/null;
+  dotnet new console -o testProject
+  # no extra packages needed
+popd &>/dev/null;
+
 
 echo "Installing Powershell"
   sudo apt-get install powershell -y
