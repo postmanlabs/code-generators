@@ -11,40 +11,41 @@ This module converts a [Postman SDK](https://github.com/postmanlabs/postman-coll
 
 Every code generator has two identifiers: `language` and `variant`.
 * `language` of a code generator is the programming language in which the code snippet is generated.
-* `variant` of a code generator is the methodology or the underlying library used by the language to send requests. 
- 
-List of supported code generators: 
+* `variant` of a code generator is the methodology or the underlying library used by the language to send requests.
+
+List of supported code generators:
 
 | Language | Variant        |
 |-----------|---------------|
 | C | libcurl |
-| C# | RestSharp | 
-| cURL | cURL | 
-| Dart | http | 
-| Go | Native | 
-| HTTP | HTTP | 
+| C# | RestSharp |
+| cURL | cURL |
+| Dart | http |
+| Go | Native |
+| HTTP | HTTP |
 | Java | OkHttp |
 | Java | Unirest |
-| JavaScript | Fetch | 
-| JavaScript | jQuery | 
+| JavaScript | Fetch |
+| JavaScript | jQuery |
+| JavaScript | UrlFetchApp |
 | JavaScript | XHR |
-| NodeJs | Axios | 
+| NodeJs | Axios |
 | NodeJs | Native |
 | NodeJs | Request |
 | NodeJs | Unirest |
 | Objective-C| NSURLSession|
-| OCaml | Cohttp | 
+| OCaml | Cohttp |
 |PHP | cURL |
 |PHP | pecl_http |
 |PHP | HTTP_Request2 |
-| PowerShell | RestMethod | 
+| PowerShell | RestMethod |
 | Python | http.client |
 | Python | Requests |
 | Ruby | Net:HTTP |
 | Shell | Httpie |
 | Shell | wget |
-| Swift | URLSession | 
-## Table of contents 
+| Swift | URLSession |
+## Table of contents
 
 1. [Getting Started](#getting-started)
 2. [Prerequisite](#prerequisite)
@@ -72,11 +73,11 @@ To run any of the postman-code-generators, ensure that you have NodeJS >= v8. A 
 
 ## Usage
 
-### Using postman-code-generators as a Library 
+### Using postman-code-generators as a Library
 There are three functions that are exposed in postman-code-generators: getLanguageList, getOptions, and convert.
 
 #### getLanguageList
-This function returns a list of supported code generators. 
+This function returns a list of supported code generators.
 
 ##### Example:
 ```js
@@ -105,7 +106,7 @@ var codegen = require('postman-code-generators'), // require postman-code-genera
     // ]
 ```
 
-#### getOptions 
+#### getOptions
 
 This function takes in three parameters and returns a callback  with error and supported options of that code generator.
 
@@ -132,7 +133,7 @@ var codegen = require('postman-code-generators'), // require postman-code-genera
       }
       console.log(options);
     });
-// output: 
+// output:
 //     [
 //     {
 //       name: 'Set indentation count',
@@ -153,7 +154,7 @@ var codegen = require('postman-code-generators'), // require postman-code-genera
 //   ];
 ```
 
-#### convert 
+#### convert
 This function takes in five parameters and returns a callback with error and generated code snippet
 * `language` - lang key from the language list returned from getLanguageList function
 * `variant` - variant key provided by getLanguageList function
@@ -165,7 +166,7 @@ This function takes in five parameters and returns a callback with error and gen
 ```js
 var codegen = require('postman-code-generators'), // require postman-code-generators in your project
     sdk = require('postman-collection'), // require postman-collection in your project
-    request = new sdk.Request('https://www.google.com'),  //using postman sdk to create request 
+    request = new sdk.Request('https://www.google.com'),  //using postman sdk to create request
     language = 'nodejs',
     variant = 'request',
     options = {
@@ -189,21 +190,21 @@ This command will install all the dependencies in production mode.
 ```bash
 $ npm install;
 ```
-To install dev dependencies also for all codegens run: 
+To install dev dependencies also for all codegens run:
 ```bash
-$ npm run deepinstall dev; 
+$ npm run deepinstall dev;
 ```
-### Testing 
+### Testing
 To run common repo test as well as tests (common structure test + individual codegen tests) for all the codegens
 ```bash
-$ npm test; 
+$ npm test;
 ```
 To run structure and individual tests on a single codegen
 ```bash
 $ npm test <codegen-name>;
 # Here "codege-name" is the folder name of the codegen inside codegens folder
 ```
-### Packaging 
+### Packaging
 To create zipped package of all codegens
 ```bash
 $ npm run package;
