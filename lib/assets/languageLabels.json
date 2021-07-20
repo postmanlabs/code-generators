@@ -16,6 +16,7 @@
   "powershell": "PowerShell",
   "csharp": "C#",
   "nodejs": "NodeJs",
+  "qcobjects":"QCObjects",
   "ocaml": "OCaml",
   "shell": "Shell",
   "dart": "Dart"
